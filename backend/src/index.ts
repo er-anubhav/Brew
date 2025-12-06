@@ -35,7 +35,7 @@ const allowedOrigins = [CORS_ORIGIN_WEB, CORS_ORIGIN_MOBILE].filter(Boolean);
 
 app.use(
   cors({
-    origin: (origin, callback) => {
+    origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
       // Allow requests with no origin (mobile apps, Postman, curl, etc.)
       if (!origin) return callback(null, true);
       

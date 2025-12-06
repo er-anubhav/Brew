@@ -20,7 +20,7 @@ const connectDB = async (): Promise<void> => {
       console.log('Mongoose connected to MongoDB');
     });
 
-    mongoose.connection.on('error', (err) => {
+    mongoose.connection.on('error', (err: Error) => {
       console.error('Mongoose connection error:', err);
     });
 
