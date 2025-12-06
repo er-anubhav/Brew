@@ -52,3 +52,40 @@ Follow the Expo CLI instructions to run on iOS, Android, or web.
 ## Development
 
 Each project can be developed independently. Navigate to the respective directory and follow the instructions above.
+
+## Deployment
+
+The backend API is deployed on Railway:
+
+**Production URL:**
+```
+https://brew-production.up.railway.app
+```
+
+### Health Check
+To verify the deployment is live:
+
+```bash
+curl https://brew-production.up.railway.app/
+```
+
+Expected response:
+```
+{"success":true,"data":{"message":"Backend API is running","environment":"production","version":"1.0.0"}}
+```
+
+### Example API Endpoints
+
+- Health: `GET /`
+- Signup: `POST /auth/signup`
+- Login: `POST /auth/login`
+- Tasks: `GET /tasks` (requires JWT)
+
+You can use Postman, Insomnia, or PowerShell's `Invoke-RestMethod` to test endpoints.
+
+**Example (PowerShell):**
+```powershell
+Invoke-RestMethod -Uri "https://brew-production.up.railway.app/"
+```
+
+See backend/DEPLOYMENT.md for more details.
