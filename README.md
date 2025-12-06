@@ -57,9 +57,14 @@ Each project can be developed independently. Navigate to the respective director
 
 The backend API is deployed on Railway:
 
-**Production URL:**
+**Backened Production URL:**
 ```
 https://brew-production.up.railway.app
+```
+
+**Web Production URL:**
+```
+https://brew-mu.vercel.app/
 ```
 
 ### Health Check
