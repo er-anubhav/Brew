@@ -1,4 +1,5 @@
 import { Stack } from 'expo-router';
+// RootLayout ensures the navigation stack is set up correctly
 import Toast from 'react-native-toast-message';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import '../global.css';

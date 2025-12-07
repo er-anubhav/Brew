@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import {
     View,
     Text,
@@ -10,7 +10,7 @@ import {
     Alert,
     Modal,
 } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useRouter, useFocusEffect } from 'expo-router';
 import TaskCard from '../../components/TaskCard';
 import { Task, TaskStatus } from '../../types/task';
 import { getTasks } from '../../services/api';
@@ -33,14 +33,26 @@ export default function TasksScreen() {
     const [showFilterModal, setShowFilterModal] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
+    // Refs to track current filter/search state for focus refresh
+    const statusFilterRef = useRef(statusFilter);
+    const searchQueryRef = useRef(searchQuery);
+
+    useEffect(() => {
+        statusFilterRef.current = statusFilter;
+    }, [statusFilter]);
+
+    useEffect(() => {
+        searchQueryRef.current = searchQuery;
+    }, [searchQuery]);
+
     const fetchTasks = async (isRefreshing = false) => {
         try {
             if (!isRefreshing) setLoading(true);
             setError(null);
 
             const response = await getTasks(
-                statusFilter,
-                searchQuery.trim() || undefined
+                statusFilterRef.current,
+                searchQueryRef.current?.trim() || undefined
             );
 
             const tasksData = response.data.data.tasks;
@@ -54,6 +66,13 @@ export default function TasksScreen() {
             setRefreshing(false);
         }
     };
+
+    // Refresh when screen comes into focus
+    useFocusEffect(
+        useCallback(() => {
+            fetchTasks();
+        }, [])
+    );
 
     useEffect(() => {
         fetchTasks();
@@ -153,8 +172,8 @@ export default function TasksScreen() {
                         onChangeText={setSearchQuery}
                     />
                     <Text className={`absolute left-0 transition-all text-secondary ${searchQuery
-                            ? '-top-3.5 text-sm'
-                            : 'top-2 text-base'
+                        ? '-top-3.5 text-sm'
+                        : 'top-2 text-base'
                         }`}>
                         Search tasks
                     </Text>
@@ -238,8 +257,8 @@ export default function TasksScreen() {
                             >
                                 <Text
                                     className={`text-base ${statusFilter === option.value
-                                            ? 'text-primary font-bold'
-                                            : 'text-secondary'
+                                        ? 'text-primary font-bold'
+                                        : 'text-secondary'
                                         }`}
                                 >
                                     {option.label}
