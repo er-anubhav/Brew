@@ -1,0 +1,34 @@
+{
+    "cli": {
+        "version": ">= 5.2.0"
+    },
+    "build": {
+        "development": {
+            "developmentClient": true,
+            "distribution": "internal",
+            "android": {
+                "buildType": "apk"
+            }
+        },
+        "preview": {
+            "distribution": "internal",
+            "android": {
+                "buildType": "apk"
+            },
+            "env": {
+                "API_URL": "https://brew-production.up.railway.app"
+            }
+        },
+        "production": {
+            "android": {
+                "buildType": "apk"
+            },
+            "env": {
+                "API_URL": "https://brew-production.up.railway.app"
+            }
+        }
+    },
+    "submit": {
+        "production": {}
+    }
+}
